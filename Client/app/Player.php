@@ -22,6 +22,16 @@
 
 namespace Mp3Player
 {
+    global $Mp3Player__t_ByteSeq;
+
+    if(!isset($Mp3Player__t_ByteSeq))
+    {
+        $Mp3Player__t_ByteSeq = IcePHP_defineSequence('::Mp3Player::ByteSeq', $IcePHP__t_byte);
+    }
+}
+
+namespace Mp3Player
+{
     global $Mp3Player__t_Player;
     global $Mp3Player__t_PlayerPrx;
 
@@ -50,5 +60,7 @@ namespace Mp3Player
     IcePHP_defineOperation($Mp3Player__t_PlayerPrx, 'addNewFile', 0, 0, 0, array(array($IcePHP__t_string), array($IcePHP__t_string), array($IcePHP__t_string), array($IcePHP__t_string), array($IcePHP__t_string), array($IcePHP__t_string)), null, array($IcePHP__t_string), null);
     IcePHP_defineOperation($Mp3Player__t_PlayerPrx, 'findByFeature', 0, 0, 0, array(array($IcePHP__t_string), array($IcePHP__t_string)), null, array($IcePHP__t_string), null);
     IcePHP_defineOperation($Mp3Player__t_PlayerPrx, 'deleteFile', 0, 0, 0, array(array($IcePHP__t_string)), null, array($IcePHP__t_string), null);
+    IcePHP_defineOperation($Mp3Player__t_PlayerPrx, 'getFile', 0, 0, 0, null, null, array($Mp3Player__t_ByteSeq), null);
+    IcePHP_defineOperation($Mp3Player__t_PlayerPrx, 'setFile', 0, 0, 0, array(array($Mp3Player__t_ByteSeq)), null, null, null);
 }
 ?>

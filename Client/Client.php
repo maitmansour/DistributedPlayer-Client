@@ -1,5 +1,10 @@
 
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+ini_set('memory_limit', '-1');
+
 require 'Ice.php';
 require 'app/Player.php';
  
@@ -13,6 +18,35 @@ try
     {
         throw new RuntimeException("Invalid proxy");
     }
+    
+$my_place = "music/"; // directory of your file 
+$my_file = "sample.mp3"; // your file
+
+$my_path = $my_place.$my_file;
+$array=null;
+
+
+//SENDING
+$handle = fopen($my_path, "rb");
+$contents = fread($handle, filesize($my_path));
+fclose($handle);
+$byte_array = unpack('C*', $contents);
+$player->setFile($byte_array);
+
+
+
+//READING
+
+$file = 'music/streamed.mp3';
+$contents=$player->getFile();
+$fp = fopen($file, 'wb');
+foreach ($contents as $key => $value) {
+fwrite($fp,pack('C*', $value));
+}
+fclose($fp);
+
+
+echo "ok"; die;
 
     if ($argc>1) {
         
