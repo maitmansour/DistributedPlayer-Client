@@ -20,7 +20,7 @@ try
     }
     
 $my_place = "music/"; // directory of your file 
-$my_file = "sample.mp3"; // your file
+$my_file = "bensound.mp3"; // your file
 
 $my_path = $my_place.$my_file;
 $array=null;
@@ -34,16 +34,17 @@ $byte_array = unpack('C*', $contents);
 
 //Chunk Array
 $byte_parts=array_chunk($byte_array, 100000);
-
+$date = date_create();
+$name= date_timestamp_get($date);
+$size=count($byte_parts)-1;
 foreach ($byte_parts as $keyArray => $valueArray) {
-$player->setFile($valueArray);
-break;
+$player->setFile($name."",$valueArray,$keyArray."",$size."");
 }
 
 
 
 //READING
-
+/*
 $file = 'music/streamed.mp3';
 $contents=$player->getFile();
 $fp = fopen($file, 'wb');
@@ -52,7 +53,7 @@ fwrite($fp,pack('C*', $value));
 }
 fclose($fp);
 
-
+*/
 echo "ok"; die;
 
     if ($argc>1) {
