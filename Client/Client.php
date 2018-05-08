@@ -31,7 +31,14 @@ $handle = fopen($my_path, "rb");
 $contents = fread($handle, filesize($my_path));
 fclose($handle);
 $byte_array = unpack('C*', $contents);
-$player->setFile($byte_array);
+
+//Chunk Array
+$byte_parts=array_chunk($byte_array, 100000);
+
+foreach ($byte_parts as $keyArray => $valueArray) {
+$player->setFile($valueArray);
+break;
+}
 
 
 
