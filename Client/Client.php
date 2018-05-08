@@ -24,7 +24,7 @@ $my_file = "bensound.mp3"; // your file
 
 $my_path = $my_place.$my_file;
 $array=null;
-
+/*
 
 //SENDING
 $handle = fopen($my_path, "rb");
@@ -39,21 +39,23 @@ $name= date_timestamp_get($date);
 $size=count($byte_parts)-1;
 foreach ($byte_parts as $keyArray => $valueArray) {
 $player->setFile($name."",$valueArray,$keyArray."",$size."");
-}
+}*/
 
 
 
 //READING
-/*
-$file = 'music/streamed.mp3';
-$contents=$player->getFile();
+
+for ($i=1; $i < 6; $i++) { 
+$file = 'music/streamed-'.$i.'.mp3';
+
+$contents=$player->getFile("name","".$i);
 $fp = fopen($file, 'wb');
 foreach ($contents as $key => $value) {
 fwrite($fp,pack('C*', $value));
 }
 fclose($fp);
+}
 
-*/
 echo "ok"; die;
 
     if ($argc>1) {
