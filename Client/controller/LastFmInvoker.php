@@ -38,6 +38,9 @@ class LastFmInvoker
     public function prepare($data)
     {
         $data['api_key'] = $this->api_key;
+       	$data['method'] = 'track.getInfo';
+		$data['format'] ='json';
+
         foreach ($data as $key => $value)
             $this->params .= $key . '=' . $value . '&';
         $this->params = trim($this->params, '&');
