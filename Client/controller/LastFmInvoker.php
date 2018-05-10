@@ -16,7 +16,7 @@ class LastFmInvoker
     function __construct()
     {
         $this->url     = "http://ws.audioscrobbler.com/2.0/";
-        $this->api_key = "API_KEY_HERE";
+        $this->api_key = Config::LAST_FM_API_KEY;
         $this->params  = "";
         $this->ch      = curl_init();
     }

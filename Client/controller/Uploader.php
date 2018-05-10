@@ -73,7 +73,7 @@
             if(!is_dir($this->destinationPath)){
                 $this->setMessage("Destination folder is not a directory ");
             }else if(!is_writable($this->destinationPath)){
-                $this->setMessage("Destination is not writable !");
+                $this->setMessage("Destination is not writable !".$this->destinationPath);
             }else if(empty($name)){
                 $this->setMessage("File not selected ");
             }else if($size>$this->maxSize){
@@ -81,7 +81,7 @@
             }else if($this->allowAll || (!$this->allowAll && in_array($ext,$this->extensions))){
 
         if($this->sameName==false){
-                    $this->uploadName   =  $this->imageSeq."-".substr(md5(rand(1111,9999)),0,8).$this->getRandom().rand(1111,1000).rand(99,9999).".".$ext;
+                    $this->uploadName   =  substr(md5(rand(1111,9999)),0,8).$this->getRandom().rand(1111,1000).rand(99,9999).".".$ext;
                 }else{
             $this->uploadName=  $name;
         }
