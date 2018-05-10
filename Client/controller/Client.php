@@ -1,6 +1,6 @@
 <?php
 require 'Ice.php';
-require '../app/Player.php';
+require __DIR__.'/../app/Player.php';
 
 /**
  * Client Class
