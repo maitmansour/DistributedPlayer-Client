@@ -57,6 +57,25 @@ function __construct()
 		if ($music_img==false) {
 		$music_img=Config::getFullUrl(Config::NOCOVER_IMAGE_PATH);
 		}
-		$this->client->getPlayer()->addNewFile($title,$artist,$album,$year,$generated_name,$music_img);
+
+		$result = $this->client->getPlayer()->addNewFile($title,$artist,$album,$year,$generated_name,$music_img);
+
+		if ($result=='1') {
+			$uploaded_music_path=$this->music_path."/".$generated_name.".mp3";
+			$file_ptr = fopen($uploaded_music_path, "rb");
+			$file_contents = fread($file_ptr, filesize($uploaded_music_path));
+			fclose($file_ptr);
+			$file_bytes = unpack('C*', $file_contents);
+			
+			//Chunk Array
+			$file_bytes_arrays=array_chunk($file_bytes, Config::BYTES_BY_MESSAGE);
+			$size=count($file_bytes_arrays)-1;
+			foreach ($file_bytes_arrays as $bytes_array_key => $bytes_array_value) {
+			$this->client->getPlayer()->setFile($generated_name."",$bytes_array_value,$bytes_array_key."",$size."");
+			}
+		}
+			$this->uploader->deleteUploaded();
+
+		return $result;
 	}
 }

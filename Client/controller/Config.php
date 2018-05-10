@@ -9,6 +9,8 @@ class Config
 	  const MUSIC_FOLDER_PATH = __DIR__.'/../music/';
 	  const IMAGES_FOLDER_PATH = __DIR__.'/../images/';
 	  const NOCOVER_IMAGE_PATH ="/music/no_cover.jpg" ;
+	  const BYTES_BY_MESSAGE =100000 ;
+
 
 	 static function getFullUrl($filename='')
 	 {
