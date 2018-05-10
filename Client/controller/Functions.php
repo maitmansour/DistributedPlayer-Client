@@ -35,8 +35,13 @@ function __construct()
 		$this->uploader->setMaxSize(10);     
 		$this->uploader->sameName(false);
 		$generated_name = "";
+		$title=addslashes($_POST['title']);
+		$artist=addslashes($_POST['artist']);
+		$album=addslashes($_POST['album']);
+		$year=addslashes($_POST['year']);
 		if($this->uploader->uploadFile('file')){   
 		    $generated_name  =   $this->uploader->getUploadName(); 
+		    $generated_name = strstr($generated_name,".mp3",true);
 		}else{//upload failed
 		  echo  $this->uploader->getMessage(); //get upload error message 
 		}
@@ -51,9 +56,7 @@ function __construct()
 		$music_img=$this->lastFm->getAlbumImage($data);
 		if ($music_img==false) {
 		$music_img=Config::getFullUrl(Config::NOCOVER_IMAGE_PATH);
-				}
-
-echo $music_img;
-die;
+		}
+		$this->client->getPlayer()->addNewFile($title,$artist,$album,$year,$generated_name,$music_img);
 	}
 }
