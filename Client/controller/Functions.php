@@ -30,6 +30,10 @@ function __construct()
      */
     public function addNewMusic()
     {
+    	if ( $this->client->getPlayer()==null) {
+    		return "0";
+    	}
+    	
     	$this->uploader->setDir($this->music_path);
 		$this->uploader->setExtensions(array('mp3'));  //allowed extensions list//
 		$this->uploader->setMaxSize(10);     
@@ -40,24 +44,23 @@ function __construct()
 		$album=addslashes($_POST['album']);
 		$year=addslashes($_POST['year']);
 		if($this->uploader->uploadFile('file')){   
-		    $generated_name  =   $this->uploader->getUploadName(); 
-		    $generated_name = strstr($generated_name,".mp3",true);
+			$generated_name  =   $this->uploader->getUploadName(); 
+			$generated_name = strstr($generated_name,".mp3",true);
 		}else{//upload failed
-		  echo  $this->uploader->getMessage(); //get upload error message 
+			return "0";
 		}
 
 
 		$data = array (
-		    'artist' => $_POST['artist'],
-		    'track' => $_POST['title']
+			'artist' => $_POST['artist'],
+			'track' => $_POST['title']
 		);
 
 		$this->lastFm->prepare($data);
 		$music_img=$this->lastFm->getAlbumImage($data);
 		if ($music_img==false) {
-		$music_img=Config::getFullUrl(Config::NOCOVER_IMAGE_PATH);
+			$music_img=Config::getFullUrl(Config::NOCOVER_IMAGE_PATH);
 		}
-
 		$result = $this->client->getPlayer()->addNewFile($title,$artist,$album,$year,$generated_name,$music_img);
 
 		if ($result=='1') {
@@ -71,11 +74,70 @@ function __construct()
 			$file_bytes_arrays=array_chunk($file_bytes, Config::BYTES_BY_MESSAGE);
 			$size=count($file_bytes_arrays)-1;
 			foreach ($file_bytes_arrays as $bytes_array_key => $bytes_array_value) {
-			$this->client->getPlayer()->setFile($generated_name."",$bytes_array_value,$bytes_array_key."",$size."");
+				$this->client->getPlayer()->setFile($generated_name."",$bytes_array_value,$bytes_array_key."",$size."");
 			}
 		}
-			$this->uploader->deleteUploaded();
+		$this->uploader->deleteUploaded();
 
 		return $result;
 	}
-}
+
+	 /**
+     * get All Music
+     */
+	 public function getMusicList()
+	 {
+	 	if ( $this->client->getPlayer()==null) {
+    		return "0";
+    	}
+	 	$result = $this->client->getPlayer()->getAllMusic();
+	 	return json_decode($result,TRUE);
+
+	 }
+
+	 /**
+     * get a  Music by filename
+     */
+	 public function getMusicByFilename($filename)
+	 {
+	 	$result = $this->client->getPlayer()->findByFeature("filename",$filename);
+	 	return json_decode($result,TRUE);
+
+	 }
+
+	 /**
+     * delete file by filename
+     */
+	 public function deleteMusicByFilename($filename)
+	 {
+	 	$result = $this->client->getPlayer()->deleteFile($filename);
+	 	return json_decode($result,TRUE);
+
+	 }
+
+	 /**
+     * delete file by filename
+     */
+	 public function downloadMusicByFilename($filename)
+	 {
+	 	$file = Config::MUSIC_FOLDER_PATH.$filename.'.mp3';
+	 	if (!file_exists($file)) {
+	 		$fp = fopen($file, 'wb+');
+
+	 		for ($i=1; true; $i++) { 
+	 			$contents=$this->client->getPlayer()->getFile($filename,"".$i);
+	 			foreach ($contents as $key => $value) {
+	 				fwrite($fp,pack('C*', $value));
+	 			}
+	 			if (count($contents)<Config::BYTES_BY_MESSAGE) {
+	 				break;
+	 			}
+	 		}
+	 		fclose($fp);
+	 	}
+	 	return  Config::getFullUrl("/Client/music/".$filename.".mp3");
+
+	 }
+
+
+	}

@@ -22,7 +22,7 @@ class Client
             }
         }
         catch (Exception $ex) {
-            echo $ex;
+           $this->player=null;
         }
         
     }
