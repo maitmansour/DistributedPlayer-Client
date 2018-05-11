@@ -143,4 +143,29 @@ function __construct()
 	 }
 
 
+	 /**
+     * listen file by filename FOR APP ONLY
+     */
+	 public function listenMusicByFilename($filename)
+	 {
+	 	$file = Config::MUSIC_FOLDER_PATH.$filename.'.mp3';
+	 	if (!file_exists($file)) {
+	 		$fp = fopen($file, 'wb+');
+
+	 		for ($i=1; true; $i++) { 
+	 			$contents=$this->client->getPlayer()->getFile($filename,"".$i);
+	 			foreach ($contents as $key => $value) {
+	 				fwrite($fp,pack('C*', $value));
+	 			}
+	 			if (count($contents)<Config::BYTES_BY_MESSAGE) {
+	 				break;
+	 			}
+	 		}
+	 		fclose($fp);
+	 	}
+	 	return  Config::getFullUrl("/DistributedPlayer-Client/Client/music/".$filename.".mp3");
+
+	 }
+
+
 	}
