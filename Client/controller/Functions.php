@@ -85,12 +85,15 @@ function __construct()
 	 /**
      * get All Music
      */
-	 public function getMusicList()
+	 public function getMusicList($ajax=false)
 	 {
 	 	if ( $this->client->getPlayer()==null) {
     		return "0";
     	}
 	 	$result = $this->client->getPlayer()->getAllMusic();
+	 	if ($ajax) {
+	 		return $result;
+	 	}
 	 	return json_decode($result,TRUE);
 
 	 }

@@ -8,12 +8,17 @@ require '../Client/controller/Functions.php';
 
 
 $query=isset($_GET['q'])?$_GET['q']:"";
-$notification="-1";
 $functions = new Functions();
+header('Content-Type: application/json');
+
 switch ($query) {
-	case 'playlist':
-	
-	# code...
+	case 'songs':
+	if (isset($_GET['file'])) {
+		$notification=$functions->deleteMusicByFilename($_GET['file']);
+	}
+
+	echo $functions->getMusicList(true);
+
 	break;
 
 	default:
