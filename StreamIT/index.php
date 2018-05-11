@@ -78,7 +78,7 @@ $songs="";
                 <span class="song-artist-album">'.$music_value['album'].'</span>
                 </div>
                 <span class="song-duration">
-                3:30
+                '.$functions->listenMusicByFilename($music_value['filename']).'
                 <span>
                 </div>
                 ';

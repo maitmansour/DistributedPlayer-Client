@@ -3,8 +3,7 @@ window.onkeydown = function(e) {
 };
 
 $(document).on('ready', function(){
-  //initMusicList();
-
+  updateDuration();
     /*
     Handles a click on the down button to slide down the playlist.
     */
@@ -48,3 +47,27 @@ $(document).on('ready', function(){
 $(window).on('resize', function(){
   $('img[amplitude-song-info="cover_art_url"]').css('height', $('img[amplitude-song-info="cover_art_url"]').width() + 'px' );
 });
+
+//Secondes to minutes
+function fmtMSS(s){var tmpTime= (s-(s%=60))/60+(9<s?':':':0')+s;
+var newPosition = tmpTime.indexOf(":")+3;
+return tmpTime.substring(0, newPosition); }
+
+function updateDuration(){
+$(".song-duration").each(function() {
+  var duration_div = $( this );
+   var musicUrl = duration_div.text();
+   duration_div.text('');
+   var sound      = document.createElement('audio');
+      sound.id       = 'audio-player';
+      sound.controls = 'controls';
+      sound.src      = musicUrl;
+      sound.type     = 'audio/mpeg';
+      var secondes;
+      sound.onloadedmetadata = function() {
+        secondes=sound.duration;
+        duration_div.text(fmtMSS(secondes));
+      }
+        delete sound;
+});
+  }
