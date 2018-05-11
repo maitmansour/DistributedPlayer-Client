@@ -1,14 +1,13 @@
 var queryUrl="http://192.168.1.59/DistributedPlayer-Client/admin/ajax.php?q=";
 var musicUrl="http://192.168.1.59/DistributedPlayer-Client/Client/music/";
 
-
 window.onkeydown = function(e) {
   return !(e.keyCode == 32);
 };
 $(document).on('ready', function(){
   initMusicList();
 
-  /*
+    /*
     Handles a click on the down button to slide down the playlist.
     */
     $('.down-header').on('click', function(){
@@ -51,7 +50,7 @@ function initMusicList() {
   var musicList="";
   var secondes=0;
   $.ajax({url: queryUrl+"songs", success: function(result){
-
+    initAmplitudeList(result);
     $.each(result, function (key, value) {
       var sound      = document.createElement('audio');
       sound.id       = 'audio-player';
@@ -83,6 +82,30 @@ function initMusicList() {
     });// End of Each
 
   }});//initMusicList End
+
+}
+
+function initAmplitudeList(result) {
+  var songs = [];
+
+  $.each(result, function (key, value) {
+    songs.push({ 
+      "name" : value['title'],
+      "artist"  : value['artist'],
+      "album"       : value['album'],
+      "url"       : musicUrl+value['filename']+'.mp3',
+      "cover_art_url"       : value['image']
+    });
+  });
+  Amplitude.init({
+    "bindings": {
+      37: 'prev',
+      39: 'next',
+      32: 'play_pause'
+    },
+    "songs": songs
+  });
+
 
 }
 
