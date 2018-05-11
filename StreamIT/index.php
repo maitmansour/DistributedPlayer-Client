@@ -31,6 +31,8 @@ $songs="";
     <!-- Include Amplitude JS -->
     <script type="text/javascript" src="dist/amplitude.js"></script>
 
+    <!-- Include Artyom JS -->
+    <script ype="text/javascript" src="resources/artyom/artyom.window.min.js"></script>
 
     <!--
       Include UX functions JS
@@ -175,5 +177,87 @@ $songs="";
     },
     "songs": <?=$songs?>
   });
+
+</script>
+
+<script type="text/javascript">
+// Create a variable that stores your instance
+var artyom = new Artyom();
+// Start the commands !
+artyom.initialize({
+    lang: "en-GB", // GreatBritain english
+    continuous: true, // Listen forever
+    soundex: true,// Use the soundex algorithm to increase accuracy
+    debug: true, // Show messages in the console
+    executionKeyword: "and do it now",
+    listen: true, // Start to listen commands !
+
+    // If providen, you can only trigger a command if you say its name
+    // e.g to trigger Good Morning, you need to say "Jarvis Good Morning"
+   // name: "Jarvis" 
+}).then(() => {
+    console.log("Artyom has been succesfully initialized");
+}).catch((err) => {
+    console.error("Artyom couldn't be initialized: ", err);
+});
+// or add some commandsDemostrations in the normal way
+artyom.addCommands([
+    {
+        indexes: ['Start','Play music'],
+        action: (i) => {
+            Amplitude.play();
+        }
+    },
+    {
+        indexes: ['Stop','Pause','Hold On'],
+        action: (i) => {
+            Amplitude.pause();
+        }
+    },
+    {
+        indexes: ['next','Go on'],
+        action: (i) => {
+            Amplitude.next();
+        }
+    },
+    {
+        indexes: ['Play Adele Hello','I want to listen to hello','Please Play Hello'],
+        action: (i) => {
+          Amplitude.playNow({
+                "name" : "Hello",
+                "artist"  : "Adele",
+                "album"       : "Hello",
+                "url"       : "http://localhost/DistributedPlayer-Client/Client/music/dc363817152606792094116671710036258.mp3",
+                "cover_art_url"       : "https://lastfm-img2.akamaized.net/i/u/174s/79521634782f16bf04b530761613af1f.png"
+                });
+        }
+    },
+    {
+        indexes: ['Play California','I want to listen to California','Please Play California'],
+        action: (i) => {
+          Amplitude.playNow({
+                "name" : "Hotel California",
+                "artist"  : "Eagles",
+                "album"       : "Eagles",
+                "url"       : "http://localhost/DistributedPlayer-Client/Client/music/3483e5ec152598305248291534310181978.mp3",
+                "cover_art_url"       : "https://lastfm-img2.akamaized.net/i/u/174s/ec559161068a480699519195e06af1e7.png"
+                });
+        }
+    },
+    {
+        indexes: ['previous','Go back'],
+        action: (i) => {
+            Amplitude.prev();
+        }
+    },
+    // The smart commands support regular expressions
+    {
+        indexes: [/Good Morning/i],
+        smart:true,
+        action: (i,wildcard) => {
+            artyom.say("You've said : "+ wildcard);
+        }
+    },
+]);
 
 </script>

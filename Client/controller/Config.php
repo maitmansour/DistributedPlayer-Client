@@ -5,7 +5,7 @@
 class Config
 {
 	
-	  const LAST_FM_API_KEY = 'LAST_FM_API_KEY';
+	  const LAST_FM_API_KEY = '2f244252a7630eb51bc03e7f561b3108';
 	  const MUSIC_FOLDER_PATH = __DIR__.'/../music/';
 	  const IMAGES_FOLDER_PATH = __DIR__.'/../images/';
 	  const NOCOVER_IMAGE_PATH ="/Client/images/no_cover.jpg" ;
