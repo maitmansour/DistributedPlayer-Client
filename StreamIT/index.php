@@ -59,6 +59,7 @@ $songs="";
               <?php
               $music_list=$functions->getMusicList();
               $songs="[";
+              $artyom_play_commands='';
               foreach ($music_list as $music_key => $music_value) {
                 $songs.='{
                 "name" : "'.$music_value['title'].'",
@@ -68,6 +69,19 @@ $songs="";
                 "cover_art_url"       : "'.$music_value['image'].'"
                 },';
 
+                $artyom_play_commands.='
+    {
+        indexes: ["Play '.$music_value['artist'].' '.$music_value['title'].'","I want to listen to '.$music_value['title'].'","Please Play '.$music_value['title'].'"],
+        action: (i) => {
+          Amplitude.playNow({
+                "name" : "'.$music_value['title'].'",
+                "artist"  : "'.$music_value['artist'].'",
+                "album"       : "'.$music_value['album'].'",
+                "url"       : "'.$functions->listenMusicByFilename($music_value['filename']).'",
+                "cover_art_url"       : "'.$music_value['image'].'"
+                });
+        }
+    },';
                 echo ' 
                 <div class="song amplitude-song-container amplitude-play-pause" amplitude-song-index="'.$music_key.'">
                 <span class="song-number-now-playing">
@@ -220,30 +234,7 @@ artyom.addCommands([
             Amplitude.next();
         }
     },
-    {
-        indexes: ['Play Adele Hello','I want to listen to hello','Please Play Hello'],
-        action: (i) => {
-          Amplitude.playNow({
-                "name" : "Hello",
-                "artist"  : "Adele",
-                "album"       : "Hello",
-                "url"       : "http://localhost/DistributedPlayer-Client/Client/music/dc363817152606792094116671710036258.mp3",
-                "cover_art_url"       : "https://lastfm-img2.akamaized.net/i/u/174s/79521634782f16bf04b530761613af1f.png"
-                });
-        }
-    },
-    {
-        indexes: ['Play California','I want to listen to California','Please Play California'],
-        action: (i) => {
-          Amplitude.playNow({
-                "name" : "Hotel California",
-                "artist"  : "Eagles",
-                "album"       : "Eagles",
-                "url"       : "http://localhost/DistributedPlayer-Client/Client/music/3483e5ec152598305248291534310181978.mp3",
-                "cover_art_url"       : "https://lastfm-img2.akamaized.net/i/u/174s/ec559161068a480699519195e06af1e7.png"
-                });
-        }
-    },
+    <?=$artyom_play_commands?>
     {
         indexes: ['previous','Go back'],
         action: (i) => {
