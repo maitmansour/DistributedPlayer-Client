@@ -9,6 +9,8 @@ window.onkeydown = function(e) {
 $(document).on('ready', function(){
   updateDuration();
   cornerimage= $( ".cornerimage" );
+  adjustScreen();
+
     /*
     Handles a click on the down button to slide down the playlist.
     */
@@ -125,5 +127,24 @@ function stopArtyom()
  artyom.fatality().then(() => {
   console.log("Artyom succesfully stopped");
 });
+}
+
+function adjustScreen(){
+  var appSize=$('#player-screen').height();
+  var screenSize=$( window ).height();
+  var newButtomSize=0;
+  if (appSize!=screenSize) {
+
+    if (appSize<screenSize) {
+     newButtomSize=screenSize-(appSize-$('#player-bottom').height());
+     $('#player-bottom').height(newButtomSize);
+   }else if (appSize>screenSize) {
+     newButtomSize=screenSize-(appSize-$('#player-bottom').height());
+     var imgHeight = $('#player-top').height();
+     imgHeight=imgHeight-(appSize-screenSize);
+     $('#player-top').height(imgHeight);
+   }
+
+ }
 }
 

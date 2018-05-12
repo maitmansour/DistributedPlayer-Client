@@ -407,7 +407,7 @@ screen and (min-width:64em) {
 	/*padding-right: .625rem;
 	padding-left: .625rem*/
 }
-
+/*
 @media print,
 screen and (min-width:40em) {
 	.column,
@@ -416,7 +416,7 @@ screen and (min-width:40em) {
 		padding-left: .9375rem
 	}
 }
-
+*/
 .column:last-child:not(:first-child),
 .columns:last-child:not(:first-child) {
 	float: right

@@ -4,7 +4,7 @@ body{
 
 div#flat-black-player-container {
   position: relative;
-  max-width: 400px;
+  max-width: 100%;
   margin: auto;
 }
 div#flat-black-player-container div#list-screen {
@@ -256,8 +256,8 @@ div#flat-black-player-container div#player-middle {
   background-color: #000;
   padding-left: 15px;
   padding-right: 15px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 3px;
+  padding-bottom: 2px;
   text-align: center;
   position: relative;
 }
@@ -301,9 +301,9 @@ div#flat-black-player-container div#player-bottom {
   padding-right: 25px;
 }
 div#flat-black-player-container div#player-bottom div#control-container {
-  height: 98px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  height: 85px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 div#flat-black-player-container div#player-bottom div#control-container div#shuffle-container {
   float: left;

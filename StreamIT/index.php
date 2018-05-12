@@ -158,7 +158,9 @@ $songs="";
               </div>
             </div>
           </div>
-          <div id="player-bottom">
+          <div id="player-bottom" style="
+    position: relative;
+">
             <div id="control-container">
 
               <div id="shuffle-container">
