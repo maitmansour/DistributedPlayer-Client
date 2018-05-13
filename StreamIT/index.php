@@ -107,7 +107,7 @@ $songs="";
               </div>
               <span class="song-duration">
               '.$functions->listenMusicByFilename($music_value['filename']).'
-              <span>
+              </span>
               </div>
               ';
             }
