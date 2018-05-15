@@ -26,6 +26,17 @@ function __construct()
 }
 
     /**
+     * get Machine IP
+     */
+public function getCurrentHostIp()
+{
+	$ip = exec('ifconfig wlp1s0 | grep "inet addr"', $full_output);
+	$addr=explode(" ", $ip);
+	$ip=explode(":", $addr[11]);
+	$ip=$ip[1];
+	return $ip;
+}
+    /**
      * add new music
      */
     public function addNewMusic()
@@ -88,8 +99,8 @@ function __construct()
 	 public function getMusicList($ajax=false)
 	 {
 	 	if ( $this->client->getPlayer()==null) {
-    		return "0";
-    	}
+	 		return "0";
+	 	}
 	 	$result = $this->client->getPlayer()->getAllMusic();
 	 	if ($ajax) {
 	 		return $result;

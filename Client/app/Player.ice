@@ -1,6 +1,6 @@
 module Mp3Player
 {
-	sequence<byte> ByteSeq;
+    sequence<byte> ByteSeq;
     interface Player
     {
         string addNewFile(string title, string artist, string album, string year, string filename,string image);

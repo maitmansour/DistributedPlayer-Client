@@ -19,6 +19,9 @@ switch ($query) {
 
 	echo $functions->getMusicList(true);
 	break;
+	case 'ip':
+	echo $functions->getCurrentHostIp();
+	break;
 
 	default:
 	break;
